@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/fukkong/Uncensored/issues"
   },
-  "homepage": "https://github.com/fukkong/Uncensored#readme"
+  "homepage": "https://github.com/fukkong/Uncensored#readme",
+  "dependencies": {
+    "ethers": "^3.0.15"
+  }
 }
