@@ -29,16 +29,24 @@ const endBlock = 5490404
 let data
 etherScanProvider.getHistory(address, startBlock, endBlock).then(function (history) {
   console.log(history)
-  data = history[1]['data']
-  console.log(history.length)
-  console.log(utf8Decode(hexToString(data)))
-  const ul = document.getElementById('list')
-  for(let i=0;i<data.length;i++){
-    const li = document.createElement('li')
-    const children = ul.children.length+1
-    li.setAttribute("id","element"+i+1)
-    li.appendChild(document.createTextNode(history[i]['blockHash']))
-    ul.appendChild(li)
+  const table = document.getElementById('table_body')
+  for (let i = 0; i < history.length; i++) {
+    const number = document.createElement('th')
+    number.setAttribute('scope','row')
+    number.innerHTML = i + 1
+    const blockNum = document.createElement('td')
+    blockNum.innerHTML = history[i]['blockNumber']
+    const txHash = document.createElement('td')
+    txHash.innerHTML = history[i]['hash']
+    const txIndex = document.createElement('td')
+    txIndex.innerHTML = history[i]['transactionIndex']
+    const tr = document.createElement('tr')
+    tr.appendChild(number)
+    tr.appendChild(blockNum)
+    tr.appendChild(txHash)
+    tr.appendChild(txIndex)
+    table.appendChild(tr)
+
   }
 })
 
