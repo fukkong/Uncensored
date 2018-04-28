@@ -26,18 +26,18 @@ const etherScanProvider = new ethers.providers.EtherscanProvider()
 
 const startBlock = 3135808
 const endBlock = 5490404
-let data
+
 etherScanProvider.getHistory(address, startBlock, endBlock).then(function (history) {
   console.log(history)
   const table = document.getElementById('table_body')
   for (let i = 0; i < history.length; i++) {
     const number = document.createElement('th')
-    number.setAttribute('scope','row')
+    number.setAttribute('scope', 'row')
     number.innerHTML = i + 1
     const blockNum = document.createElement('td')
     blockNum.innerHTML = history[i]['blockNumber']
     const txHash = document.createElement('td')
-    txHash.innerHTML = history[i]['hash']
+    txHash.innerHTML = utf8Decode(hexToString(history[i]['data']))
     const txIndex = document.createElement('td')
     txIndex.innerHTML = history[i]['transactionIndex']
     const tr = document.createElement('tr')
@@ -46,7 +46,6 @@ etherScanProvider.getHistory(address, startBlock, endBlock).then(function (histo
     tr.appendChild(txHash)
     tr.appendChild(txIndex)
     table.appendChild(tr)
-
   }
 })
 
@@ -75,6 +74,3 @@ function hexToString (hex) {
   }
   return string
 }
-
-
-
