@@ -25,7 +25,7 @@ provider.resolveName('test.ricmoose.eth').then(function (address) {
 const etherScanProvider = new ethers.providers.EtherscanProvider()
 
 const startBlock = 3135808
-const endBlock = 5490404
+const endBlock = 5902590
 
 etherScanProvider.getHistory(address, startBlock, endBlock).then(function (history) {
   console.log(history)
@@ -36,14 +36,15 @@ etherScanProvider.getHistory(address, startBlock, endBlock).then(function (histo
     number.innerHTML = i + 1
     const blockNum = document.createElement('td')
     blockNum.innerHTML = history[i]['blockNumber']
-    const txHash = document.createElement('td')
-    txHash.innerHTML = utf8Decode(hexToString(history[i]['data']))
+    const txData = document.createElement('td')
+    txData.innerHTML = utf8Decode(hexToString(history[i]['data']))
+    txData.setAttribute('class', 'limit')
     const txIndex = document.createElement('td')
     txIndex.innerHTML = history[i]['transactionIndex']
     const tr = document.createElement('tr')
     tr.appendChild(number)
     tr.appendChild(blockNum)
-    tr.appendChild(txHash)
+    tr.appendChild(txData)
     tr.appendChild(txIndex)
     table.appendChild(tr)
   }
