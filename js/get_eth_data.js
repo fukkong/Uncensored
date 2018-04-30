@@ -50,6 +50,41 @@ etherScanProvider.getHistory(address, startBlock, endBlock).then(function (histo
   }
 })
 
+function searchByAddress (searchAddress) {
+  const temp = $('#searchInput').val()
+  if (temp !== '') {
+    try {
+      etherScanProvider.getHistory(temp, startBlock, endBlock).then(function (history) {
+        $('#table_body').empty()
+        console.log(history)
+        for (let i = 0; i < history.length; i++) {
+          const number = document.createElement('th')
+          number.setAttribute('scope', 'row')
+          number.innerHTML = i + 1
+          const blockNum = document.createElement('td')
+          blockNum.innerHTML = history[i]['blockNumber']
+          const txData = document.createElement('td')
+          txData.innerHTML = utf8Decode(hexToString(history[i]['data']))
+          txData.setAttribute('class', 'limit')
+          const txIndex = document.createElement('td')
+          txIndex.innerHTML = history[i]['transactionIndex']
+          const tr = document.createElement('tr')
+          tr.appendChild(number)
+          tr.appendChild(blockNum)
+          tr.appendChild(txData)
+          tr.appendChild(txIndex)
+          $('#table_body').append(tr)
+        }
+      })
+    } catch (e) {
+      //not working TODO: catch error
+      alert('search address is not valid.')
+    }
+  } else {
+    alert('search address is empty.')
+  }
+}
+
 function utf8Decode (utf8String) {
   if (typeof utf8String !== 'string') throw new TypeError('parameter ‘utf8String’ is not a string')
   // note: decode 3-byte chars first as decoded 2-byte strings could appear to be 3-byte char!
